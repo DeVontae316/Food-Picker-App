@@ -9,13 +9,22 @@ const moods: Mood[] = [
   { emoji: "🍔", name: "hamburger" },
   { emoji: "🍏", name: "apple" },
   { emoji: "🍤", name: "shrimp" },
+  
 ];
 
-export const MoodPicker: React.FC = () => {
+type Submit = {
+    setSubmit:React.Dispatch<React.SetStateAction<Mood | undefined>>
+}
+
+export const MoodPicker: React.FC<Submit> = ({setSubmit}) => {
   const [selectedItem, setSelectItem] = useState<Mood>();
   const handlePress = (obj: Mood) => {
     setSelectItem(obj);
   };
+
+  const handleSubmit = ()=>{
+      setSubmit(selectedItem)
+  }
   return (
     <>
       <View style={[styles.foodsContainer]}>
@@ -43,7 +52,7 @@ export const MoodPicker: React.FC = () => {
           ))}
         </View>
         <View style={styles.btnContainer}>
-          <Pressable style={styles.btn}>
+          <Pressable style={styles.btn} onPress={()=>handleSubmit}>
             <Text style={styles.btnText}>Choose</Text>
           </Pressable>
         </View>
